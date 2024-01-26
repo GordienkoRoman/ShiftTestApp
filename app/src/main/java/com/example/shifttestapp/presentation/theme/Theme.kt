@@ -1,4 +1,4 @@
-package com.example.shifttestapp.ui.theme
+package com.example.shifttestapp.presentation.theme
 
 import android.app.Activity
 import android.os.Build

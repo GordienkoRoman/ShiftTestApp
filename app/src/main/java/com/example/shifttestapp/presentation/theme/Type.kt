@@ -1,4 +1,4 @@
-package com.example.shifttestapp.ui.theme
+package com.example.shifttestapp.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
