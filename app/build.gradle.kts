@@ -2,8 +2,9 @@
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
-    alias(libs.plugins.ksp)
+   // alias(libs.plugins.ksp)
     alias(libs.plugins.parcelize)
+    alias(libs.plugins.kapt)
 }
 
 android {
@@ -56,6 +57,8 @@ dependencies {
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.livedata)
+    implementation(libs.lifecycle.viewmodel)
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)
@@ -65,10 +68,11 @@ dependencies {
 
     implementation (libs.androidx.room.runtime)
     implementation(libs.room.core)
-    ksp(libs.room.compiler)
+  //  ksp(libs.room.compiler)
 
     implementation(libs.dagger.core)
-    ksp(libs.dagger.compiler)
+    kapt(libs.dagger.compiler)
+  //  ksp(libs.dagger.compiler)
 
     implementation(libs.retorfit.core)
     implementation(libs.retorfit.gsonConverter)
