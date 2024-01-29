@@ -3,9 +3,10 @@ package com.example.shifttestapp.di.modules
 import android.content.Context
 import androidx.room.Room
 import com.example.shifttestapp.data.local.AppDataBase
-import com.example.shifttestapp.data.local.UsersDao
+import com.example.shifttestapp.data.local.dao.UsersDao
+import com.example.shifttestapp.data.repositories.RoomRepositoryImpl
 import com.example.shifttestapp.di.components.AppScope
-import com.example.shifttestapp.domain.model.RoomRepository
+import com.example.shifttestapp.domain.repositories.RoomRepository
 import dagger.Module
 import dagger.Provides
 
@@ -26,7 +27,7 @@ class DataBaseModule {
 
     @AppScope
     @Provides
-    fun provideRoomRepository(usersDao: UsersDao, context: Context):RoomRepository {
-        return RoomRepository(usersDao = usersDao, context = context)
+    fun provideRoomRepository(usersDao: UsersDao, context: Context): RoomRepository {
+        return RoomRepositoryImpl(usersDao = usersDao, context = context)
     }
 }

@@ -5,8 +5,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shifttestapp.data.remote.RandomUserApi
-import com.example.shifttestapp.domain.model.RoomRepository
 import com.example.shifttestapp.domain.model.User
+import com.example.shifttestapp.domain.repositories.RoomRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -44,14 +44,16 @@ class UserListViewModel @Inject constructor(
         started = SharingStarted.Lazily,
         initialValue = listOf()
     )
-    fun requestUsers(){
+    fun fetchUsers(){
         viewModelScope.launch {
             loadingMutableStateFlow.value = true
             runCatching {
                 randomUserApi.getUsers()
             }.onSuccess {
                 Log.d("TAG",it.toString())
-               // remoteRandomUsersMutableStateFlow.value = it.map { result -> User.mapToUser(result) }
+                remoteRandomUsersMutableStateFlow.value =
+                    it.results.map { result -> User.mapToUser(result) }
+                roomRepository.addUser(it.results.map { result -> User.mapToUser(result) })
                 loadingMutableStateFlow.value = false
             }.onFailure {
                 Log.d("TAG",it.message.toString())

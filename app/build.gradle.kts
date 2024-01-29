@@ -2,7 +2,7 @@
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
-   // alias(libs.plugins.ksp)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.parcelize)
     alias(libs.plugins.kapt)
 }
@@ -65,17 +65,21 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
+    implementation(libs.navigation)
 
     implementation (libs.androidx.room.runtime)
     implementation(libs.room.core)
-  //  ksp(libs.room.compiler)
+    kapt(libs.room.compiler)
+   // ksp(libs.room.compiler)
 
     implementation(libs.dagger.core)
     kapt(libs.dagger.compiler)
-  //  ksp(libs.dagger.compiler)
+   // ksp(libs.dagger.compiler)
 
     implementation(libs.retorfit.core)
     implementation(libs.retorfit.gsonConverter)
+
+    implementation(libs.coil)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

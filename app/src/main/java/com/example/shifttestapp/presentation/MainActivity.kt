@@ -1,17 +1,27 @@
 package com.example.shifttestapp.presentation
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.EaseIn
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.shifttestapp.BaseApplication
+import com.example.shifttestapp.Screen
 import com.example.shifttestapp.di.viewModelFactory.ViewModelFactory
+import com.example.shifttestapp.domain.model.User
 import com.example.shifttestapp.presentation.theme.ShiftTestAppTheme
-import com.example.shifttestapp.presentation.userList.UserListScreem
+import com.example.shifttestapp.presentation.userInfo.UserInfoScreen
+import com.example.shifttestapp.presentation.userList.UserListScreen
 import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
@@ -24,17 +34,43 @@ class MainActivity : ComponentActivity() {
     }
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         component.inject(this)
         super.onCreate(savedInstanceState)
         setContent {
+            val navController: NavHostController = rememberNavController()
             ShiftTestAppTheme {
-                Box(modifier = Modifier.fillMaxSize()
-                    .background(Color.Red)){
-
+                NavHost(
+                    modifier = Modifier,
+                    navController = navController,
+                    startDestination = Screen.UserList.route,
+                    route = Screen.ROUTE_MAIN_GRAPH
+                )
+                {
+                    composable(route = Screen.UserList.route)
+                    {
+                        UserListScreen(viewModelFactory,
+                            onItemClick = {
+                                navController.navigate(Screen.getRouteWithArgs(it))
+                            }
+                        )
+                    }
+                    composable(route = Screen.UserInfo.route + "/{${Screen.KEY_USER}}",
+                        arguments = listOf(
+                            navArgument(Screen.KEY_USER) {
+                                type = User.NavigationType
+                            }),
+                        enterTransition = {
+                           slideIntoContainer(
+                                animationSpec = tween(300, easing = EaseIn),
+                                towards = AnimatedContentTransitionScope.SlideDirection.Left
+                            )
+                        })
+                    {
+                        val userId = it.arguments?.getParcelable(Screen.KEY_USER) ?: User()
+                        UserInfoScreen(userId)
+                    }
                 }
-               UserListScreem(factory =viewModelFactory )
             }
         }
     }
