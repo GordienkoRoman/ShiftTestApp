@@ -1,12 +1,11 @@
 package com.example.shifttestapp.data.remote
 
-import com.example.shifttestapp.domain.model.User
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface RandomUserApi {
     @GET("?")
     suspend fun getUsers(
-        @Query("results") results: Int = 5
-    ):  Results
+        @Query("results") results: Int = 50 //Можно было дать возможность
+    ):  Results                            // выбирать пользователю, но в ТЗ не было
 }

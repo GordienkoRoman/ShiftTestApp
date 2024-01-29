@@ -15,7 +15,6 @@ kapt = "1.9.22"
 dagger = "2.48.1"
 retrofit = "2.9.0"
 coil = "2.2.2"
-splashscreen = "1.0.1"
 kotlinx = "1.7.3"
 navigation = "2.7.6"
 
@@ -23,7 +22,6 @@ navigation = "2.7.6"
 navigation = {group = "androidx.navigation", name = "navigation-compose",version.ref = "navigation"}
 coroutines = {group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android",version.ref = "kotlinx"}
 coroutines-core = {group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core",version.ref = "kotlinx"}
-splashscreen = { group = "androidx.core", name = "core-splashscreen",version.ref = "splashscreen"}
 coil = {group = "io.coil-kt", name = "coil-compose",version.ref = "coil"}
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-core = { group = "androidx.room", name = "room-ktx", version.ref = "room" }

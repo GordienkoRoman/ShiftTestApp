@@ -1,14 +1,12 @@
 package com.example.shifttestapp.presentation
 
-import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.EaseIn
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -61,14 +59,18 @@ class MainActivity : ComponentActivity() {
                                 type = User.NavigationType
                             }),
                         enterTransition = {
-                           slideIntoContainer(
+                            slideIntoContainer(
                                 animationSpec = tween(300, easing = EaseIn),
                                 towards = AnimatedContentTransitionScope.SlideDirection.Left
                             )
                         })
                     {
-                        val userId = it.arguments?.getParcelable(Screen.KEY_USER) ?: User()
-                        UserInfoScreen(userId)
+                        val user = it.arguments?.getParcelable(Screen.KEY_USER) ?: User()
+                        if (user.id == "") {
+                            Toast.makeText(baseContext, "navigation error", Toast.LENGTH_SHORT)
+                                .show()
+                        } else
+                            UserInfoScreen(user)
                     }
                 }
             }

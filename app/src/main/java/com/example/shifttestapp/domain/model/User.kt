@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.os.Parcelable
 import androidx.navigation.NavType
 import com.example.shifttestapp.data.remote.Coordinates
-import com.example.shifttestapp.data.remote.Dob
-import com.example.shifttestapp.data.remote.Location
 import com.example.shifttestapp.data.remote.Result
 import com.google.gson.Gson
 import kotlinx.parcelize.Parcelize
@@ -37,6 +35,8 @@ data class User(
                 city = result.location.city,
                 state = result.location.state,
                 country = result.location.country,
+                coordinates = Coordinates(result.location.coordinates.latitude,
+                    result.location.coordinates.longitude),
                 age = result.dob.age
             )
         }

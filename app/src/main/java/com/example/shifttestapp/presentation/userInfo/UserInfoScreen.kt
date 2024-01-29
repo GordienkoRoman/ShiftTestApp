@@ -2,77 +2,105 @@ package com.example.shifttestapp.presentation.userInfo
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import coil.compose.SubcomposeAsyncImage
 import com.example.shifttestapp.domain.model.User
 
+
 @Composable
-fun UserInfoScreen(user: User){
+fun UserInfoScreen(user: User) {
     val context = LocalContext.current
 
-    Card(
-        modifier = Modifier
-            .fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp)
-    ) {
 
-        Row {
-            Box(
-                modifier = Modifier
-                    .size(72.dp)
-            ) {
-                SubcomposeAsyncImage(
-                    model = user.picture,
-                    contentDescription = "",
-                    modifier = Modifier.fillMaxWidth(),
-                    contentScale = ContentScale.Crop
-                )
-            }
-            Column {
-                Text(text = user.name)
-                Button(onClick = {
-                    val intent = Intent(Intent.ACTION_SENDTO).apply {
-                        data = Uri.parse("mailto:") // Only email apps handle this.
-                        putExtra(Intent.EXTRA_SUBJECT, "Hi ${user.name},")
-                        putExtra(Intent.EXTRA_EMAIL, arrayOf(user.mail))
-                    }
-                    ContextCompat.startActivity(context, intent, null)
-                }) {
-                    Text(text = user.mail, color = Color.Yellow)
-                }
-                Button(
-                    onClick = {
-                        val call = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${user.number}"))
-                        ContextCompat.startActivity(context, call, null)
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Transparent
-                    )
-                ) {
-                    Text(
-                        user.number,
-                        color = MaterialTheme.colorScheme.tertiary
-                    )
-                }
-            }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.primary),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(15.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .size(128.dp)
+        ) {
+            SubcomposeAsyncImage(
+                model = user.picture,
+                contentDescription = "",
+                modifier = Modifier.fillMaxWidth(),
+                contentScale = ContentScale.Crop
+            )
         }
+        UserInfoItem(option = "Name", value = user.name)
+        UserInfoItem(option = "Gender", value = user.gender)
+        UserInfoItem(option = "Age", value = user.age.toString())
+        UserInfoItem(option = "mail", value = user.mail, true) {
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:") // Only email apps handle this.
+                putExtra(Intent.EXTRA_SUBJECT, "Hi ${user.name},")
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(user.mail))
+            }
+            startActivity(context, intent, null)
+        }
+        UserInfoItem(option = "number", value = user.number, true) {
+            val call = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${user.number}"))
+            startActivity(context, call, null)
+        }
+        UserInfoItem(option = "Country", value = user.country)
+        UserInfoItem(option = "State", value = user.state)
+        UserInfoItem(option = "City", value = user.city, true)
+        {
+            //Не правильно показывает, мб данные некорректные на сайте.
+            val gmmIntentUri =
+                Uri.parse("geo:${user.coordinates.latitude},${user.coordinates.longitude}")
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            startActivity(context, mapIntent, null)
+        }
+    }
+}
+
+
+@Composable
+fun UserInfoItem(
+    option: String,
+    value: String,
+    isActive: Boolean = false,
+    onClick: () -> Unit = {}
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 15.dp)
+    )
+    {
+        Text(
+            text = "$option:",
+            modifier = Modifier.weight(1f),
+            color = MaterialTheme.colorScheme.secondary
+        )
+        Text(
+            modifier = Modifier.clickable { onClick() },
+            text = value,
+            color = if (isActive) MaterialTheme.colorScheme.tertiary
+            else MaterialTheme.colorScheme.secondary
+        )
     }
 }

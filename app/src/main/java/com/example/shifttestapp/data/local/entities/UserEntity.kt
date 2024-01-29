@@ -25,9 +25,6 @@ data class UserEntity(
     val userId: String,
 ) {
 
-    /*  companion object {
-          const val TABLE_NAME = "accounts"
-      }*/
     fun toUser(): User = User(
         id = userId,
         name = name,

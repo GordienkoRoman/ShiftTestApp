@@ -11,16 +11,13 @@ class RoomRepositoryImpl  @Inject constructor(
     private val usersDao: UsersDao,
     val context: Context
 ): RoomRepository {
-    override suspend fun addUser(users: List<User>) {
+    override suspend fun addUsers(users: List<User>) {
+        usersDao.deleteUsers()
         for (user in users)
       usersDao.insertUser(user.toEntity())
     }
 
-    override suspend fun deleteUsers() {
-
-    }
-
     override suspend fun getUsers(): List<User> {
-       return listOf()
+       return usersDao.getUsers().map { it.toUser() }
     }
 }
