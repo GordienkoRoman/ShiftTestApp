@@ -1,9 +1,10 @@
 Тестовое задание для проекта ШИФТ.
 Краткая информация о пользователях в виде списка.
-<img width="591" height="1280" alt="image" src="https://github.com/user-attachments/assets/8066bc40-d55e-4940-9b51-530ff13e71c6" />
+<img width="400" height="850" alt="image" src="https://github.com/user-attachments/assets/8066bc40-d55e-4940-9b51-530ff13e71c6" />
 
 По клику на пользователя полная ифнормация на отдельном экране.
-<img width="591" height="1280" alt="image" src="https://github.com/user-attachments/assets/d7ee4b49-77dd-4547-9c65-b493b6578dc5" />
+<img width="400" height="850" alt="image" src="https://github.com/user-attachments/assets/808ffbcc-9ea1-4034-820f-0bd3265ac52c" />
+
 
 Вся информация о пользователях хранится в базе данных SQLite с помощью Room, поэтому не теряется при перезапуске.
 Также используется библотека dagger, потому что очень полезна и популярна.
