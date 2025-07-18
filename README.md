@@ -1,8 +1,10 @@
 Тестовое задание для проекта ШИФТ.
 Краткая информация о пользователях в виде списка.
+
 <img width="400" height="850" alt="image" src="https://github.com/user-attachments/assets/8066bc40-d55e-4940-9b51-530ff13e71c6" />
 
 По клику на пользователя полная ифнормация на отдельном экране.
+
 <img width="400" height="850" alt="image" src="https://github.com/user-attachments/assets/808ffbcc-9ea1-4034-820f-0bd3265ac52c" />
 
 
